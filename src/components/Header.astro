@@ -1,8 +1,7 @@
 ---
 import HeaderLink from "./HeaderLink.astro";
-import { siteConfig, NAV_LINKS } from "../consts";
+import { siteConfig, NAV_LINKS, BASE_PATH } from "@/consts";
 import ThemeToggle from "@/components/ThemeToggle";
-import SelectLanguage from "@/components/SelectLanguage";
 import { getLangFromUrl } from "@/utils";
 import { useNavTranslations } from "src/utils/i18n";
 import type { NavEntry } from "@/i18n/nav";
@@ -13,10 +12,10 @@ const t = useNavTranslations(lang);
 
 function buildNavLink(nav: string, entry: NavEntry): string {
 	if (entry.route) {
-		return `/${lang}${entry.route}`;
+		return `${BASE_PATH}${lang}${entry.route}`;
 	}
 
-	return `/${lang}${nav != "home" ? `/${entry.slug}/` : "/"}`;
+	return `${BASE_PATH}${lang}${nav != "home" ? `/${entry.slug}/` : `/`}`;
 }
 ---
 
@@ -27,7 +26,7 @@ function buildNavLink(nav: string, entry: NavEntry): string {
 	<div class="block">
 		<a
 			class="title whitespace-nowrap"
-			href={`/${lang}/`}
+			href={`${BASE_PATH}${lang}/`}
 			aria-current={url.pathname === "/" ? "page" : false}
 			>{siteConfig.title}</a
 		>
@@ -79,7 +78,6 @@ function buildNavLink(nav: string, entry: NavEntry): string {
 	</nav>
 
 	<div class="flex gap-2 items-center justify-center">
-		<SelectLanguage class="sm:mr-2" />
 		<ThemeToggle />
 
 		<nav-button>
@@ -145,38 +143,3 @@ function buildNavLink(nav: string, entry: NavEntry): string {
 		@apply text-bgColor;
 	}
 </style>
-
-<script>
-	// src: https://github.com/chrismwilliams/astro-theme-cactus/blob/a85e0e559d3f92b32e73990486c0574b2b733227/src/components/layout/Header.astro
-
-	class MobileNavBtn extends HTMLElement {
-		private headerEl: HTMLElement;
-		private mobileButtonEl: HTMLButtonElement;
-		private menuOpen: boolean;
-
-		constructor() {
-			super();
-			this.headerEl = document.getElementById("main-header")!;
-			this.mobileButtonEl = this.querySelector(
-				"button",
-			) as HTMLButtonElement;
-			this.menuOpen = false;
-
-			this.mobileButtonEl.addEventListener(
-				"click",
-				this.toggleMobileMenu,
-			);
-		}
-
-		toggleMobileMenu = () => {
-			this.headerEl.classList.toggle("menu-open");
-			this.menuOpen = !this.menuOpen;
-			this.mobileButtonEl.setAttribute(
-				"aria-expanded",
-				this.menuOpen.toString(),
-			);
-		};
-	}
-
-	customElements.define("nav-button", MobileNavBtn);
-</script>

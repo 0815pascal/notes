@@ -6,13 +6,13 @@
   :root {
     color-scheme: light;
     /* https://tailwindcss.com/docs/customizing-colors#using-css-variables */
-    --theme-bg: #efefef;
+    --theme-bg: #f7f7f7;
     --theme-text: #222222;
-    --theme-accent: #dd7878;
+    --theme-accent: #c68c3a;
     --theme-accent-2: #bcc0cd;
     --theme-surface: #e6e6e6;
-    --theme-quote: #dd7878;
-    --theme-highlight: #dd7878;
+    --theme-quote: #c68c3a;
+    --theme-highlight: #c68c3a;
   }
 
   :root.dark {
