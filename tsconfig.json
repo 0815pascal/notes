@@ -2,29 +2,22 @@
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     "baseUrl": ".",
-    "target": "ES2022",
-    "strictNullChecks": true,
     "paths": {
-      "@/utils": [
-        "src/utils/index.ts"
-      ],
-      "@/components/*": [
-        "src/components/*.astro"
-      ],
-      "@/layouts/*": [
-        "src/layouts/*.astro"
-      ],
-      "@/i18n/*": [
-        "src/i18n/*.ts"
-      ],
-      "@/styles/*": [
-        "src/styles/*.css"
-      ],
+      "@/utils": ["src/utils/index.ts"],
+      "@/components/*": ["src/components/*.astro"],
+      "@/layouts/*": ["src/layouts/*.astro"],
+      "@/i18n/*": ["src/i18n/*.ts"],
+      "@/styles/*": ["src/styles/*.css"],
       "@/consts": ["src/consts.ts"]
-    }
+    },
+    "target": "ES2022",
+    "strict": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
   },
-  "include": [
-    "src",
-    "*.ts"
-  ]
+  "include": ["src", "*.ts"],
+  "exclude": ["node_modules"]
 }
