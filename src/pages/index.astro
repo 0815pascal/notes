@@ -1,6 +1,6 @@
 ---
-import { DEFAULT_LANG } from "@/consts";
-const path = `/${DEFAULT_LANG}/`;
+import { DEFAULT_LANG, BASE_PATH } from "@/consts"; // Ensure BASE_PATH is defined in src/consts.ts
+const path = `${BASE_PATH}${DEFAULT_LANG}/`;
 
 return Astro.redirect(path);
 ---

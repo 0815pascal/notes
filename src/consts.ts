@@ -29,6 +29,7 @@ export const SUPPORTED_LANGUAGES = {
 };
 
 export const DEFAULT_LANG = SUPPORTED_LANGUAGES.en as SupportedLanguage;
+export const BASE_PATH = "/notes/";
 
 export const siteConfig: Config = {
   title: ui[DEFAULT_LANG]["site.title"].text,
