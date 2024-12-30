@@ -1,20 +1,20 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 import { getLangFromSlug, type SupportedLanguage } from "./i18n";
 
-export async function getAllPosts(filterHidden: boolean = false) {
+export async function getAllPosts(filterHidden: boolean = false): Promise<CollectionEntry<"blog">[]> {
 	return await getCollection("blog", ({ data }) => {
-		if (import.meta.env.PROD) {
-			if (filterHidden) {
-				return !data.hide;
-			}
-
-			// on production: exclude draft posts by default
-			return !data.draft;
+	  if (import.meta.env.PROD) {
+		if (filterHidden) {
+		  return !data.hide;
 		}
-
-		return filterHidden ? !data.hide : true;
+  
+		// On production: exclude draft posts by default
+		return !data.draft;
+	  }
+  
+	  return filterHidden ? !data.hide : true;
 	});
-}
+  }
 
 // ascending = oldest to newest date
 // descending = newest to oldest date
@@ -42,12 +42,17 @@ export function sortMDByPinned(posts: Array<CollectionEntry<"blog">>) {
 	});
 }
 
-export function filterByLanguage(posts: Array<CollectionEntry<"blog" | "project">>, lang: SupportedLanguage): Array<CollectionEntry<"blog" | "project">> {
-	return posts.filter((post) => {
+export function filterByLanguage(
+	posts: Array<CollectionEntry<"blog">>,
+	lang: SupportedLanguage
+  ) {
+	return posts.filter(
+	  (post): post is CollectionEntry<"blog"> => {
 		const translationLang = getLangFromSlug(post.slug);
 		return lang === translationLang;
-	});
-}
+	  }
+	);
+  }
 
 export function getPostsByTag(
 	tag: string,
@@ -74,7 +79,7 @@ export function getPostsBySeries(
 }
 
 // Possible slugs: "[lang]/[slug]" or "[slug]"
-export function getSlugFromCollectionEntry(entry: CollectionEntry<"blog" | "project">) {
+export function getSlugFromCollectionEntry(entry: CollectionEntry<"blog">) {
 	const [, ...slugs] = entry.slug.split("/");
 	// if collection entry is a translation, grab the slug only
 	return slugs.length ? slugs.join("/") : entry.slug;

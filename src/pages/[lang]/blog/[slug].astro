@@ -1,5 +1,5 @@
 ---
-import type { InferGetStaticPropsType, GetStaticPaths } from "astro";
+import type { GetStaticPaths, InferGetStaticPropsType } from "astro";
 import BlogPost from "@/layouts/BlogPost";
 import {
 	filterByLanguage,
@@ -12,10 +12,10 @@ import type { CollectionEntry } from "astro:content";
 export const getStaticPaths = (async () => {
 	const blogEntries = await getAllPosts();
 	return getSupportedLanguages().flatMap((lang) => {
-		const filteredByLanguage = filterByLanguage(
+		const filteredByLanguage: CollectionEntry<"blog">[] = filterByLanguage(
 			blogEntries,
 			lang as SupportedLanguage,
-		);
+		) as CollectionEntry<"blog">[]; // Explicit type assertion here
 
 		return filteredByLanguage.map((post) => {
 			const slug = getSlugFromCollectionEntry(
@@ -28,9 +28,12 @@ export const getStaticPaths = (async () => {
 		});
 	});
 }) satisfies GetStaticPaths;
+
 export type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
-const { post } = Astro.props;
+
+
+const { post } = Astro.props as Props;
 const { Content } = await post.render();
 ---
 

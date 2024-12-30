@@ -1,4 +1,6 @@
 ---
-import { DEFAULT_LANG } from "src/consts";
-return Astro.redirect(`/${DEFAULT_LANG}/`);
+import { DEFAULT_LANG } from "@/consts";
+const path = `/${DEFAULT_LANG}/`;
+
+return Astro.redirect(path);
 ---

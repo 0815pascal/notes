@@ -1,7 +1,7 @@
 {
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    "baseUrl": "./notes",
+    "baseUrl": ".",
     "target": "ES2022",
     "strictNullChecks": true,
     "paths": {
@@ -20,6 +20,7 @@
       "@/styles/*": [
         "src/styles/*.css"
       ],
+      "@/consts": ["src/consts.ts"]
     }
   },
   "include": [
